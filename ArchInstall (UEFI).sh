@@ -82,12 +82,12 @@ echo 'Which kernel would you like to install? [l]inux, linux-lt[s], linux-[z]en 
 read kernel
 if [ $kernel = lz ]
 then 
-  pacstrap /mnt base linux-zen linux-firmware base-devel vim 
+  pacstrap /mnt base linux-zen linux-firmware base-devel vim nano
 elif [ $kernel = s ] 
 then 
-  pacstrap /mnt base linux-lts linux-firmware base-devel vim
+  pacstrap /mnt base linux-lts linux-firmware base-devel vim nano
 else 
-  pacstrap /mnt base linux linux-firmware base-devel vim
+  pacstrap /mnt base linux linux-firmware base-devel vim nano
 fi
 genfstab -U /mnt >> /mnt/etc/fstab
 cat <<EOF > /mnt/chroot.sh
