@@ -4,9 +4,6 @@ lsblk
 
 echo 'Enter disk name (e.g. /dev/sda) '
 read disk
-disk_size = blockdev --getsize64 $disk
-root_size = (disk_size - 2,147,483,648) * 10 ** -9
-home_size = root_size - 24
 echo 'If installing Arch over an existing operating system, fdisk will ask if you if you want to continue. Type in y and then enter to continue.'
 echo 'Would you like a separate home partition? (Y/N) '
 read home
@@ -18,23 +15,21 @@ then
   p
   1
   
-  +${root_size}G
-  a
+  +2G
+  t
+  82
   n
   p
   2
   
   
-  t
-  2
-  82
+  a
   w
 EOF
-  mkswap ${disk}2
-  mkfs.ext4 ${disk}1
-  mount ${disk}1 /mnt
-  swapon ${disk}2
-  swap_part = ${disk}2
+  mkswap ${disk}1
+  mkfs.ext4 ${disk}2
+  mount ${disk}2 /mnt
+  swapon ${disk}1
 else
   fdisk $disk <<EOF
   o
@@ -42,31 +37,30 @@ else
   p
   1
   
-  +24G
-  a
+  +2G
+  t
+  82
   n
   p
   2
   
-  +${home_size}G
+  +24G
+  a
+  2
   n
   p
   3
   
   
-  t
-  3
-  82
   w
 EOF
-  mkswap ${disk}3
+  mkswap ${disk}1
   mkfs.ext4 ${disk}2
-  mkfs.ext4 ${disk}1
-  mount $(disk)1 /mnt
+  mkfs.ext4 ${disk}3
+  mount $(disk)2 /mnt
   mkdir /mnt/home
-  mount ${disk}2 /mnt/home
-  swapon ${disk}3
-  swap_part = ${disk}3
+  mount ${disk}3 /mnt/home
+  swapon ${disk}1
 fi
 echo 'Would you like to edit the pacman mirror list before installing the base system? (Y/N) '
 read mirrorlist
@@ -141,5 +135,5 @@ sed -i 's/  //g' /mnt/chroot.sh
 arch-chroot /mnt /chroot.sh
 rm -rf /mnt/chroot.sh
 umount -a
-swapoff $swap_part
+swapoff ${disk}1
 reboot
