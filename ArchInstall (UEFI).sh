@@ -66,7 +66,11 @@ EOF
   mkswap ${disk}2
   mkfs.ext4 ${disk}3
   mkfs.ext4 ${disk}4
+<<<<<<< HEAD
   mount $(disk)3 /mnt
+=======
+  mount ${disk}3 /mnt
+>>>>>>> 2a85998e78bd8726bd903eb9dddcfe0664a8870a
   mkdir /mnt/efi && mkdir /mnt/home
   mount ${disk}1 /mnt/efi
   mount ${disk}4 /mnt/home
