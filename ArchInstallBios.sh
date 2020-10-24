@@ -24,6 +24,7 @@ then
   
   
   a
+  2
   w
 EOF
   mkswap ${disk}1
@@ -101,7 +102,7 @@ cat <<EOF > /mnt/chroot.sh
   sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
   echo 'Do you need other locales other than en_US.UTF-8? [Y/N] '
   read locale_edit
-  if [ locale_edit == Y ] 
+  if [ locale_edit = Y ] 
   then 
     echo 'Comment out needed locales from the locale.gen file.'
     sleep 6
@@ -120,7 +121,7 @@ cat <<EOF > /mnt/chroot.sh
   passwd root
   echo '[I]ntel or [A]MD ucode? '
   read ucode
-  if [ $ucode == I ]
+  if [ $ucode = I ]
   then
     pacman -S grub networkmanager intel-ucode 
   else
@@ -133,7 +134,3 @@ EOF
 chmod 777 /mnt/chroot.sh
 sed -i 's/  //g' /mnt/chroot.sh
 arch-chroot /mnt /chroot.sh
-rm -rf /mnt/chroot.sh
-umount -a
-swapoff ${disk}1
-reboot
