@@ -5,6 +5,7 @@ lsblk
 echo 'Enter disk name (e.g. /dev/sda) '
 read disk
 echo 'Would you like a separate home partition? (Y/N) '
+echo 'If installing Arch over an existing operating system, fdisk will ask if you if you want to continue. Type in y and then enter to continue.'
 read home
 if [ $home = N ]
 then
