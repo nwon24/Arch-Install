@@ -1,6 +1,5 @@
 echo "This is an arch install script for a system booted into UEFi mode."
 pacman -Sy
-reflector -c 'Australia' --sort rate --save /etc/pacman.d/mirrorlist
 lsblk
 echo 'Enter disk name (e.g. /dev/sda) '
 read disk
@@ -73,22 +72,32 @@ EOF
   mount ${disk}4 /mnt/home
   swapon ${disk}2
 fi
+echo 'Would you like to edit the pacman mirror list before installing the base system? (Y/N) '
+read mirrorlist
+if [ $mirrorlist = Y ] 
+then 
+  nano /etc/pacman.d/mirrorlist
+fi 
 echo 'Which kernel would you like to install? [l]inux, linux-lt[s], linux-[z]en '
 read kernel
-if [ $kernel = l ]
+if [ $kernel = lz ]
 then 
-  pacstrap /mnt base linux base-devel vim 
+  pacstrap /mnt base linux-zen linux-firmware base-devel vim 
 elif [ $kernel = s ] 
 then 
-  pacstrap /mnt base linux-lts base-devel vim
+  pacstrap /mnt base linux-lts linux-firmware base-devel vim
 else 
-  pacstrap /mnt base linux-zen base-devel vim
+  pacstrap /mnt base linux linux-firmware base-devel vim
 fi
 genfstab -U /mnt >> /mnt/etc/fstab
 cat <<EOF > /mnt/chroot.sh
-  echo 'Enter timezone (e.g. Australia/Melbourne) '
-  read timezone
-  ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
+  ls /usr/share/zoneinfo/
+  echo 'Enter timezone reigon (look at above if unsure) '
+  read reigon
+  ls /usr/share/zoneinfo/$region/
+  echo 'Enter timezone city (look at avobe if unsure) '
+  read city
+  ln -sf /usr/share/zoneinfo/$country/$city /etc/localtime
   timedatectl set-ntp true
   hwclock --systohc
   echo 'Enter hostname '
