@@ -80,7 +80,7 @@ then
 fi 
 echo 'Which kernel would you like to install? [l]inux, linux-lt[s], linux-[z]en '
 read kernel
-if [ $kernel = lz ]
+if [ $kernel = z ]
 then 
   pacstrap /mnt base linux-zen linux-firmware base-devel vim nano
 elif [ $kernel = s ] 
@@ -93,9 +93,9 @@ genfstab -U /mnt >> /mnt/etc/fstab
 cat <<EOF > /mnt/chroot.sh
   ls /usr/share/zoneinfo/
   echo 'Enter timezone reigon (look at above if unsure) '
-  read reigon
+  read region
   ls /usr/share/zoneinfo/$region/
-  echo 'Enter timezone city (look at avobe if unsure) '
+  echo 'Enter timezone city (look at above if unsure) '
   read city
   ln -sf /usr/share/zoneinfo/$reigon/$city /etc/localtime
   timedatectl set-ntp true
