@@ -117,8 +117,8 @@ cat <<EOF > /mnt/chroot.sh
   grub-mkconfig -o /boot/grub/grub.cfg
   systemctl enable NetworkManager 
 EOF
-sed 's/  //g' /mnt/chroot/sh
 chomod 777 /mnt/chroot.sh
+sed 's/  //g' /mnt/chroot/sh
 arch-chroot /mnt /chroot.sh
 rm -rf /mnt/chroot.sh
 umount -a
