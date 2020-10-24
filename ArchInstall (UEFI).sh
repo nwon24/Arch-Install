@@ -108,10 +108,24 @@ cat <<EOF > /mnt/chroot.sh
   ::1		localhost
   127.0.1.1	$hostname.localdomain $hostname
   EOF
-  sed -i 's/#en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/g' /etc/locale.gen
   sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+  echo 'Do you need other locales other than en_US.UTF-8? [Y/N] '
+  read locale_edit
+  if [ locale_edit == Y ] 
+  then 
+    echo 'Comment out needed locales from the locale.gen file.'
+    sleep 6
+    nano /etc/locale.gen
+  fi
   locale-gen
-  echo LANG=$locale > /etc/locale.conf
+  echo 'What would you like to set the LANG variable in locale.conf? (Press enter for en_US.UTF-8) '
+  read locale
+  if [ $locale = '' ] 
+  then 
+    echo LANG=en_US.UTF-8 > /etc/locale.conf
+  else
+    echo LANG=$locale > /etc/locale.conf
+  fi
   echo 'Set root password'
   passwd root
   echo '[I]ntel or [A]MD ucode? '
