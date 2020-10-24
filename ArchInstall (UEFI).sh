@@ -3,9 +3,9 @@ pacman -Sy
 lsblk
 echo 'Enter disk name (e.g. /dev/sda) '
 read disk
+echo 'If installing Arch over an existing operating system, fdisk will ask if you if you want to continue. Type in y and then enter to continue.'
 echo 'Would you like a separate home partition? (Y/N) '
 read home
-echo 'If installing Arch over an existing operating system, fdisk will ask if you if you want to continue. Type in y and then enter to continue.'
 if [ $home = N ]
 then
   fdisk $disk <<EOF
