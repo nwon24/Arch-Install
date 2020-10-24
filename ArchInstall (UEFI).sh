@@ -118,7 +118,7 @@ cat <<EOF > /mnt/chroot.sh
   systemctl enable NetworkManager 
 EOF
 chmod 777 /mnt/chroot.sh
-sed 's/  //g' /mnt/chroot/sh
+sed 's/  //g' /mnt/chroot.sh
 arch-chroot /mnt /chroot.sh
 rm -rf /mnt/chroot.sh
 umount -a
