@@ -28,14 +28,14 @@ then
 
 
   w
-  EOF
-  mkfs.fat -F32 ($disk)1
-  mkswap ($disk)2
-  mkfs.ext4 ($disk)3
-  mount ($disk)3 /mnt
+EOF
+  mkfs.fat -F32 ${disk}1
+  mkswap ${disk}2
+  mkfs.ext4 ${disk}3
+  mount ${disk}3 /mnt
   mkdir /mnt/efi
-  mount ($disk)1 /mnt/efi
-  swapon ($disk)2
+  mount ${disk}1 /mnt/efi
+  swapon ${disk}2
 else
   fdisk $disk <<EOF
   g
@@ -61,16 +61,16 @@ else
   
   
   w
-  EOF
-  mkfs.fat -F32 ($disk)1
-  mkswap ($disk)2
-  mkfs.ext4 ($disk)3
-  mkfs.ext4 ($disk)4
-  mount ($disk3) /mnt
+EOF
+  mkfs.fat -F32 ${disk}1
+  mkswap ${disk}2
+  mkfs.ext4 ${disk}3
+  mkfs.ext4 ${disk}4
+  mount ${disk}3 /mnt
   mkdir /mnt/efi && mkdir /mnt/home
-  mount ($disk)1 /mnt/efi
-  mount ($disk)4 /mnt/home
-  swapon ($disk)2
+  mount ${disk}1 /mnt/efi
+  mount ${disk}4 /mnt/home
+  swapon ${disk}2
 fi
 echo 'Which kernel would you like to install? [l]inux, linux-lt[s], linux-[z]en '
 read kernel
