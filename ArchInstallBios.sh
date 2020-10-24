@@ -134,3 +134,7 @@ EOF
 chmod 777 /mnt/chroot.sh
 sed -i 's/  //g' /mnt/chroot.sh
 arch-chroot /mnt /chroot.sh
+rm -rf /mnt/chroot.sh
+umount -a
+swapoff ${disk}1
+reboot
