@@ -85,24 +85,24 @@ cat <<EOF > /mnt/chroot.sh
   ls /usr/share/zoneinfo/
   echo 'Enter timezone reigon (look at above if unsure) '
   read reigon
-  ls /usr/share/zoneinfo/$region/
+  ls /usr/share/zoneinfo/\$region/
   echo 'Enter timezone city (look at avobe if unsure) '
   read city
-  ln -sf /usr/share/zoneinfo/$country/$city /etc/localtime
+  ln -sf /usr/share/zoneinfo/\$reigon/\$city /etc/localtime
   timedatectl set-ntp true
   hwclock --systohc
   echo 'Enter hostname '
   read hostname
-  echo $hostname > /etc/hostname
+  echo \$hostname > /etc/hostname
   cat <<EOF > /etc/hosts
   127.0.0.1	localhost
   ::1		localhost
-  127.0.1.1	$hostname.localdomain $hostname
+  127.0.1.1	\$hostname.localdomain \$hostname
   EOF
   sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
   echo 'Do you need other locales other than en_US.UTF-8? [Y/N] '
   read locale_edit
-  if [ $locale_edit = Y ] 
+  if [ \$locale_edit = Y ] 
   then 
     echo 'Comment out needed locales from the locale.gen file.'
     sleep 6
@@ -111,17 +111,17 @@ cat <<EOF > /mnt/chroot.sh
   locale-gen
   echo 'What would you like to set the LANG variable in locale.conf? (Press enter for en_US.UTF-8) '
   read locale
-  if [ $locale = '' ] 
+  if [ \$locale = '' ] 
   then 
     echo LANG=en_US.UTF-8 > /etc/locale.conf
   else
-    echo LANG=$locale > /etc/locale.conf
+    echo LANG=\$locale > /etc/locale.conf
   fi
   echo 'Set root password'
   passwd root
   echo '[I]ntel or [A]MD ucode? '
   read ucode
-  if [ $ucode = I ]
+  if [ \$ucode = I ]
   then
     pacman -S grub networkmanager intel-ucode 
   else
