@@ -13,17 +13,21 @@ then
   g
   n
   1
+
   +500M
   t
   1
   n
   2
+
   +2G
   t
   2
   19
   n
   3
+
+
   w
 EOF
   mkfs.fat -F32 ${disk}1
