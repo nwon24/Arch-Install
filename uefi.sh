@@ -118,14 +118,9 @@ cat <<EOF > /mnt/chroot.sh
     nano /etc/locale.gen
   fi
   locale-gen
-  echo 'What would you like to set the LANG variable in locale.conf? (Press enter for en_US.UTF-8) '
+  echo 'What would you like to set the LANG variable in locale.conf? (Type in something like en_US.UTF-8) '
   read locale
-  if [ \$locale = '' ] 
-  then 
-    echo LANG=en_US.UTF-8 > /etc/locale.conf
-  else
-    echo LANG=\$locale > /etc/locale.conf
-  fi
+  echo LANG=\$locale > /etc/locale.conf
   echo 'Set root password'
   passwd root
   echo '[I]ntel or [A]MD ucode? '
